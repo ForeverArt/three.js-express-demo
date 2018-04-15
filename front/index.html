@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -45,8 +46,6 @@
 
     var camera, scene, renderer;
 
-    var mouseX = 0, mouseY = 0;
-
     var windowHalfX = window.innerWidth / 2;
     var windowHalfY = window.innerHeight / 2;
 
@@ -60,7 +59,7 @@
       container = document.createElement('div');
       document.body.appendChild(container);
 
-      camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+      camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 200, 2000);
       camera.position.z = 250;
 
       // scene
@@ -83,9 +82,6 @@
 
       };
 
-      var textureLoader = new THREE.TextureLoader(manager);
-      var texture = textureLoader.load('textures/UV_Grid_Sm.jpg');
-
       // model
 
       var onProgress = function (xhr) {
@@ -101,17 +97,7 @@
       var loader = new THREE.OBJLoader(manager);
       loader.load('http://localhost:3000/models/F117.obj', function (object) {
 
-        object.traverse(function (child) {
-
-          if (child instanceof THREE.Mesh) {
-
-            child.material.map = texture;
-
-          }
-
-        });
-
-        object.position.y = - 95;
+        object.position.y = - 45;
         scene.add(object);
 
       }, onProgress, onError);
@@ -122,8 +108,6 @@
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.setSize(window.innerWidth, window.innerHeight);
       container.appendChild(renderer.domElement);
-
-      document.addEventListener('mousemove', onDocumentMouseMove, false);
 
       //
 
@@ -143,13 +127,6 @@
 
     }
 
-    function onDocumentMouseMove(event) {
-
-      mouseX = (event.clientX - windowHalfX) / 2;
-      mouseY = (event.clientY - windowHalfY) / 2;
-
-    }
-
     //
 
     function animate() {
@@ -160,11 +137,6 @@
     }
 
     function render() {
-
-      camera.position.x += (mouseX - camera.position.x) * .05;
-      camera.position.y += (- mouseY - camera.position.y) * .05;
-
-      camera.lookAt(scene.position);
 
       renderer.render(scene, camera);
 
