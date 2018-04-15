@@ -5,7 +5,7 @@ Using express framework, import .obj file to JavaScript Object for WebGL case.
 **start express server**
 - cd src
 - npm install
-- npm start
+- node app.js
 
 **front_end**
 - cd front
